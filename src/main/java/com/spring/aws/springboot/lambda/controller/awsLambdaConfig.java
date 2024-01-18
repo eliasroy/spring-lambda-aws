@@ -1,7 +1,9 @@
 package com.spring.aws.springboot.lambda.controller;
 
 
+import com.spring.aws.springboot.lambda.config.SecurityFilter;
 import com.spring.aws.springboot.lambda.domain.CharacterDomain;
+import jakarta.servlet.Filter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +18,7 @@ import java.util.function.Supplier;
 
 @Configuration
 public class awsLambdaConfig {
+
 
     @RestController
     public static class LambdaController {
@@ -55,6 +58,10 @@ public class awsLambdaConfig {
         public ResponseEntity<Map<String, Object>> processs(@RequestBody Map<String, Object> characters) {
             return ResponseEntity.ok(process().apply(characters));
         }
+    }
+    @Bean
+    public Filter getfilter(){
+        return new SecurityFilter();
     }
 
     @Bean(name = "hello")
